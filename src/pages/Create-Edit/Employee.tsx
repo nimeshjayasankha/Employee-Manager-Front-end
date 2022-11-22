@@ -122,8 +122,8 @@ const EmployeeAdd = () => {
           List View
         </Form.EmployeeAddButton>
       </Grid>
-      <Grid item xs={4}></Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} md={4}></Grid>
+      <Grid item xs={12} md={4}>
         <EmployeeForm
           handleSubmit={handleSubmit(onSubmit)}
           errors={errors}
@@ -132,7 +132,7 @@ const EmployeeAdd = () => {
           id={id}
         />
       </Grid>
-      <Grid item xs={4}></Grid>
+      <Grid item xs={12} md={4}></Grid>
     </Grid>
   );
 };

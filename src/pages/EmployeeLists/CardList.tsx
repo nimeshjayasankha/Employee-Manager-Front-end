@@ -10,7 +10,7 @@ import { EmployeeLists, SingleEmployee } from '../../DTO/Employee';
 const CardList = ({ employees, deleteRecord, editEmployee }: EmployeeLists) => {
   return employees.map((employee: SingleEmployee, index: number) => (
     <Grid item xs={12} md={3} key={index}>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card>
         <CardMedia
           component="img"
           alt="green iguana"
@@ -18,16 +18,16 @@ const CardList = ({ employees, deleteRecord, editEmployee }: EmployeeLists) => {
           width="300"
         />
         <Form.CardContentArea>
-          <Typography variant="body2" color="text.primary">
+          <Typography variant="body2" color="text.secondary">
             {employee.first_name} {employee.last_name}
           </Typography>
-          <Typography variant="body2" color="text.primary">
+          <Typography variant="body2" color="text.secondary">
             {employee.email}
           </Typography>
-          <Typography variant="body2" color="text.primary">
+          <Typography variant="body2" color="text.secondary">
             {employee.number}
           </Typography>
-          <Typography variant="body2" color="text.primary">
+          <Typography variant="body2" color="text.secondary">
             {employee.gender === 'M' ? 'Male' : 'Female'}
           </Typography>
           <Form.DynamicDeleteButton
