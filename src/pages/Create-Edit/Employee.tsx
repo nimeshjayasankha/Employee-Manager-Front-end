@@ -27,7 +27,7 @@ const EmployeeAdd = () => {
       dispatch(singleEmployee(id));
     }
   }, [dispatch, id]);
-  const { singleRecord, isSuccess } = useSelector(
+  const { singleRecord } = useSelector(
     (state: StateValues) => state.employee
   );
   const {
@@ -71,7 +71,10 @@ const EmployeeAdd = () => {
   const mutationOnError = (error: ErrorResponse) => {
     if (error.status === 500) {
       return (
-        <AlertMessage popUpOpen={popUpOpen} message="Something went wrong!" />
+        <AlertMessage
+          popUpOpen={popUpOpen}
+          message="Something went wrong!"
+          error={'error'}/>
       );
     }
     if (error.status === 422) {
@@ -98,9 +101,16 @@ const EmployeeAdd = () => {
   };
   return (
     <Grid container spacing={2} className="layout-content">
-      {isSuccess === false && (
-        <AlertMessage popUpOpen={true} message="Something went wrong!" />
-      )}
+      {id &&
+        singleRecord &&
+        Object.keys(singleRecord).length === 0 &&
+        Object.getPrototypeOf(singleRecord) === Object.prototype && (
+          <AlertMessage
+            popUpOpen={true}
+            message="Something went wrong!"
+            error={'error'}
+          />
+        )}
 
       <Grid item xs={12}>
         <Form.EmployeeAddButton

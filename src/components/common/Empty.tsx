@@ -16,7 +16,7 @@ const Empty = () => {
         }}
       >
         <Paper>
-          <h2 className='text-center'>Sorry o Results found!</h2>
+          <h2 className='text-center'>Sorry No Results found!</h2>
         </Paper>
       </Box>
     </Grid>

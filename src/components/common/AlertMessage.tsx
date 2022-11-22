@@ -8,13 +8,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-const AlertMessage = ({ popUpOpen, message }: any) => {
+const AlertMessage = ({ popUpOpen, message, error ='success'}: any) => {
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={popUpOpen}
     >
-      <Alert severity="success" sx={{ width: '100%' }}>
+      <Alert severity={error} sx={{ width: '100%' }}>
         {message}
       </Alert>
     </Snackbar>
