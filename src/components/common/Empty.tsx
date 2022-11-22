@@ -11,7 +11,7 @@ const Empty = () => {
           flexWrap: 'wrap',
           '& > :not(style)': {
             m: 1,
-            width: 1228,
+            width: 2028,
           },
         }}
       >

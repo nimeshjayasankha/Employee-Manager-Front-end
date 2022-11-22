@@ -27,7 +27,9 @@ const EmployeeAdd = () => {
       dispatch(singleEmployee(id));
     }
   }, [dispatch, id]);
-  const { singleRecord } = useSelector((state: StateValues) => state.employee);
+  const { singleRecord, isSuccess } = useSelector(
+    (state: StateValues) => state.employee
+  );
   const {
     handleSubmit,
     control,
@@ -96,10 +98,10 @@ const EmployeeAdd = () => {
   };
   return (
     <Grid container spacing={2} className="layout-content">
-      <AlertMessage
-        popUpOpen={popUpOpen}
-        message="Employee successfully saved!"
-      />
+      {isSuccess === false && (
+        <AlertMessage popUpOpen={true} message="Something went wrong!" />
+      )}
+
       <Grid item xs={12}>
         <Form.EmployeeAddButton
           variant="contained"

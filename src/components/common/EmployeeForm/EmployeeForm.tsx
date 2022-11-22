@@ -80,6 +80,7 @@ const EmployeeForm = ({
                   id="email"
                   label="Email"
                   fullWidth
+                  type={'email'}
                 />
               )}
             />
@@ -139,7 +140,11 @@ const EmployeeForm = ({
             </FormHelperText>
           </div>
           <div className="form-control">
-            <Button variant="outlined" type="submit" disabled={savingData}>
+            <Button
+              variant="outlined"
+              type="submit"
+              disabled={savingData}
+            >
               {id ? 'Save' : 'Add'}
             </Button>
           </div>

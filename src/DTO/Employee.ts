@@ -1,4 +1,4 @@
-import { FormEventHandler, MouseEventHandler } from 'react';
+import { FormEventHandler } from 'react';
 import { Control, FieldErrorsImpl } from 'react-hook-form';
 
 export interface EmployeeLists {
@@ -54,5 +54,5 @@ export interface SearchEmployee {
   search: string;
   searchBy: string;
   setSearchBy: Function;
-  searchEmployee:Function;
+  searchEmployee: Function;
 }

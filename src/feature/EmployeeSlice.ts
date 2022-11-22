@@ -24,11 +24,7 @@ export const employeeLists = createAsyncThunk(
       });
       return response.data;
     } catch (error: any) {
-      if (error.response.status === 422) {
-        return error.response.data;
-      } else if (error.response.status === 500) {
-        return error.response.status;
-      }
+      throw error;
     }
   }
 );
@@ -40,11 +36,7 @@ export const deleteEmployee = createAsyncThunk(
       const response = await axios.delete(`${END_POINT}employee/${id}`);
       return response.data;
     } catch (error: any) {
-      if (error.response.status === 404) {
-        return error.response.data;
-      } else if (error.response.status === 500) {
-        return error.response.status;
-      }
+      throw error;
     }
   }
 );
@@ -56,11 +48,7 @@ export const singleEmployee = createAsyncThunk(
       const response = await axios.get(`${END_POINT}employee/${id}`);
       return response.data;
     } catch (error: any) {
-      if (error.response.status === 404) {
-        return error.response.data;
-      } else if (error.response.status === 500) {
-        return error.response.status;
-      }
+      throw error;
     }
   }
 );
@@ -87,6 +75,7 @@ const EmployeeListsSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.data = action.payload.data;
+        state.singleRecord = {};
       })
       .addCase(employeeLists.rejected, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
