@@ -27,7 +27,7 @@ const EmployeeAdd = () => {
       dispatch(singleEmployee(id));
     }
   }, [dispatch, id]);
-  const { singleRecord } = useSelector(
+  const { singleRecord ,isSuccess} = useSelector(
     (state: StateValues) => state.employee
   );
   const {
@@ -102,6 +102,7 @@ const EmployeeAdd = () => {
   return (
     <Grid container spacing={2} className="layout-content">
       {id &&
+        isSuccess === false &&
         singleRecord &&
         Object.keys(singleRecord).length === 0 &&
         Object.getPrototypeOf(singleRecord) === Object.prototype && (
