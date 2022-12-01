@@ -1,1 +1,1 @@
-export const END_POINT = 'http://localhost:4000/';
+export const END_POINT = 'http://44.211.202.28:4000/';
