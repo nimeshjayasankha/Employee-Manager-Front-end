@@ -4,7 +4,7 @@ import { Control, FieldErrorsImpl } from 'react-hook-form';
 export interface EmployeeLists {
   employees: any;
   deleteRecord: Function;
-  editEmployee: Function;
+  navigateToEditPage: Function;
   changeSort?: any;
 }
 
@@ -54,5 +54,10 @@ export interface SearchEmployee {
   search: string;
   searchBy: string;
   setSearchBy: Function;
-  searchEmployee: Function;
+  clearSearch: Function;
+}
+
+export interface GenderSelectBoxProps {
+  control: Control<SingleEmployee> | undefined;
+  error?: string;
 }

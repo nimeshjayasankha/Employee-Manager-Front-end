@@ -4,17 +4,17 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import * as Form from './Styled';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
+import * as Form from '../../../pages/EmployeeLists/Styled';
 import { Grid } from '@mui/material';
-import { EmployeeLists, SingleEmployee } from '../../DTO/Employee';
+import { EmployeeLists, SingleEmployee } from '../../../DTO/Employee';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
+import DeleteButton from '../DeleteButton';
+import EditButton from '../EditButton';
 
 const TableList = ({
   employees,
   deleteRecord,
-  editEmployee,
+  navigateToEditPage,
   changeSort,
 }: EmployeeLists) => {
   return (
@@ -74,16 +74,8 @@ const TableList = ({
                   {employee.gender === 'M' ? 'Male' : 'Female'}
                 </TableCell>
                 <TableCell align="right">
-                  <Form.DynamicDeleteButton
-                    onClick={() => deleteRecord(employee._id)}
-                  >
-                    <DeleteForeverIcon />
-                  </Form.DynamicDeleteButton>
-                  <Form.DynamicEditButton
-                    onClick={() => editEmployee(employee._id)}
-                  >
-                    <EditIcon />
-                  </Form.DynamicEditButton>
+                  <DeleteButton onClick={deleteRecord} id={employee._id} />
+                  <EditButton onClick={navigateToEditPage} id={employee._id} />
                 </TableCell>
               </TableRow>
             ))}

@@ -2,15 +2,15 @@ import { Grid, InputLabel, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import * as Form from './Styled';
-import { SearchEmployee } from '../../DTO/Employee';
+import * as Form from '../../../pages/EmployeeLists/Styled';
+import { SearchEmployee } from '../../../DTO/Employee';
 
 const Search = ({
   setSearch,
   search,
   searchBy,
   setSearchBy,
-  searchEmployee,
+  clearSearch,
 }: SearchEmployee) => {
   return (
     <>
@@ -49,7 +49,7 @@ const Search = ({
         <Form.SearchButton
           variant="contained"
           disabled={search === '' && searchBy === ''}
-          onClick={() => searchEmployee()}
+          onClick={() => clearSearch()}
         >
           Clear
         </Form.SearchButton>

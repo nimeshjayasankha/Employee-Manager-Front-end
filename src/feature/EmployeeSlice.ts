@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { END_POINT } from '../config';
 type EmployeeState = {
   data: string[];
@@ -24,7 +24,9 @@ export const employeeLists = createAsyncThunk(
       });
       return response.data;
     } catch (error: any) {
-      throw error;
+      console.error(error);
+      let err = error as AxiosError;
+      throw err;
     }
   }
 );
@@ -36,7 +38,9 @@ export const deleteEmployee = createAsyncThunk(
       const response = await axios.delete(`${END_POINT}employee/${id}`);
       return response.data;
     } catch (error: any) {
-      throw error;
+      console.error(error);
+      let err = error as AxiosError;
+      throw err;
     }
   }
 );
@@ -48,7 +52,9 @@ export const singleEmployee = createAsyncThunk(
       const response = await axios.get(`${END_POINT}employee/${id}`);
       return response.data;
     } catch (error: any) {
-      throw error;
+      console.error(error);
+      let err = error as AxiosError;
+      throw err;
     }
   }
 );
@@ -65,7 +71,14 @@ const initialState: EmployeeState = {
 const EmployeeListsSlice = createSlice({
   name: 'employee',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSingleEmployee: (state) => {
+      state.singleRecord = {};
+    },
+    clearEmployeeLists: (state) => {
+      state.data = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(employeeLists.pending, (state, action) => {
@@ -110,10 +123,13 @@ const EmployeeListsSlice = createSlice({
           state.singleRecord = action.payload.data;
         }
       )
-      .addCase(singleEmployee.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(singleEmployee.rejected, (state, action: any) => {
         state.isLoading = false;
+        state.message = action.error.message;
       });
   },
 });
+export const { clearSingleEmployee, clearEmployeeLists } =
+  EmployeeListsSlice.actions;
 
 export default EmployeeListsSlice.reducer;
