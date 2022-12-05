@@ -16,7 +16,7 @@ const EmployeeForm = ({
     <form onSubmit={handleSubmit}>
       <Card>
         <CardContent>
-          <InputBox
+          <InputBox //common input box component
             label={'First Name'}
             control={control}
             error={errors?.first_name?.message}

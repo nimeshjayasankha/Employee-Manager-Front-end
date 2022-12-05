@@ -9,14 +9,17 @@ import { useMutation } from 'react-query';
 import axios from 'axios';
 import { END_POINT } from '../../config';
 import { useAppDispatch } from '../../store/useDispatch';
-import { singleEmployee } from '../../feature/EmployeeSlice';
+import {
+  clearSingleEmployee,
+  singleEmployee,
+} from '../../feature/EmployeeSlice';
 import { useSelector } from 'react-redux';
 import { SingleEmployee, StateValues } from '../../DTO/Employee';
 import { backendValidation } from '../../utils/Backend-Validation';
 import { ErrorResponse, OnError } from '../../DTO/Common';
 import PrimaryButton from '../../components/common/PrimaryButton';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
+import { errorAlert, successAlert } from '../../components/common/Toast';
 
 const EmployeeAddEdit = () => {
   const { singleRecord } = useSelector((state: StateValues) => state.employee);
@@ -48,24 +51,16 @@ const EmployeeAddEdit = () => {
    */
   useEffect(() => {
     if (id) {
-      console.info('get single employee details by given id');
       dispatch(singleEmployee(id))
         .then(unwrapResult)
-        .then((data) => {
-          console.info('successfully fetch the employee details');
-        })
+        .then((data) => {})
         .catch((obj) => {
-          console.error(
-            'something went wrong when we tries to get single employee detail'
-          );
-          toast(obj.message, {
-            position: 'top-right',
-            autoClose: 1000,
-            theme: 'light',
-            type: 'error',
-          });
+          errorAlert(obj.message ?? 'Something went wrong');
         });
     }
+    return () => {
+      dispatch(clearSingleEmployee());
+    };
   }, [dispatch, id]);
   useEffect(() => {
     if (singleRecord) {
@@ -87,18 +82,14 @@ const EmployeeAddEdit = () => {
    * if employee data successfully saved or update this success function triggered
    */
   const successfullySaved = () => {
-    console.info('successfully saved the employee');
-    toast(`Employee Successfully ${id ? 'updated' : 'saved'}`, {
-      position: 'top-right',
-      autoClose: 1000,
-      theme: 'light',
-      type: 'success',
-    });
+    successAlert(`Employee Successfully ${id ? 'updated' : 'saved'}`);
     reset();
     navigate('/employee/list');
   };
   /**
-   * if employee data does not successfully saved or update this error function triggered
+   * this function trigger for backend validations
+   * @typedef ErrorResponse
+   * @prop {object} error employee validation object
    */
   const throwBackendValidation = (error: ErrorResponse) => {
     if (error?.status === 422) {
@@ -128,13 +119,7 @@ const EmployeeAddEdit = () => {
     onError: (error: OnError) => {
       throwBackendValidation(error.response);
       if (error?.response?.status !== 422) {
-        console.error('something went wrong in the employee create/edit');
-        toast(error.message, {
-          position: 'top-right',
-          autoClose: 1000,
-          theme: 'light',
-          type: 'error',
-        });
+        errorAlert(error.message ?? 'Something went wrong');
       }
     },
     onSuccess: successfullySaved,

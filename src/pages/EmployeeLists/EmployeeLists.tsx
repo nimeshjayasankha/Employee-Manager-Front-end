@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import ListSharpIcon from '@mui/icons-material/ListSharp';
 import * as Form from './Styled';
@@ -20,8 +20,8 @@ import Search from '../../components/common/EmployeeLists/Search';
 import Empty from '../../components/common/Empty';
 import PrimaryButton from '../../components/common/PrimaryButton';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
+import { errorAlert, successAlert } from '../../components/common/Toast';
 
 const EmployeeLists: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,31 +31,23 @@ const EmployeeLists: React.FC = () => {
   const [searchBy, setSearchBy] = useState<string>('');
   const [sort, setSort] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>('_id');
-  const { data, isLoading, isSuccess } = useSelector(
-    (state: StateValues) => state.employee
-  );
-  const getEmployeeLists = useCallback(
+
+  /**
+   * get employee lists with debounce.
+   * @param {object} searchParams
+   */
+  const getEmployeeLists = useRef(
     debounce((searchParams) => {
       dispatch(employeeLists(searchParams))
         .unwrap()
-        .then((data) => {
-          console.info('successfully get the employee lists');
-          return data;
-        })
+        .then((data) => {})
         .catch((obj) => {
-          console.info('something went wrong in employee lists api');
-          toast(obj.message, {
-            position: 'top-right',
-            autoClose: 1000,
-            theme: 'light',
-            type: 'error',
-          });
+          errorAlert(obj.message ?? 'Something went wrong');
         });
-    }, 600),
-    []
-  );
+    }, 600)
+  ).current;
+
   useEffect(() => {
-    console.log('loading employee lists');
     const searchParams = {
       search,
       searchBy,
@@ -69,9 +61,12 @@ const EmployeeLists: React.FC = () => {
   }, [dispatch, sortBy, sort, search, searchBy, getEmployeeLists]);
 
   const navigate = useNavigate();
+  const { data, isLoading, isSuccess } = useSelector(
+    (state: StateValues) => state.employee
+  );
 
   /**
-   * if user clicks yes button employee record should be deleted and it should be remove from the redux state.
+   * if user clicks yes button employee record should be deleted from the database and the state.
    * @param {number} id employee id
    */
   const deleteSingleEmployee = (id: string) => {
@@ -79,16 +74,10 @@ const EmployeeLists: React.FC = () => {
     dispatch(deleteEmployee(id))
       .then(unwrapResult)
       .then((data) => {
-        console.info('successfully deleted the employee');
+        successAlert('Successfully deleted the employee');
       })
       .catch((obj) => {
-        console.error('something went wrong in the employee delete');
-        toast(obj.message, {
-          position: 'top-right',
-          autoClose: 1000,
-          theme: 'light',
-          type: 'error',
-        });
+        errorAlert(obj.message ?? 'Something went wrong');
       });
   };
   const deleteRecord = (id: string) => {

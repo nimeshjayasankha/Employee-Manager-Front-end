@@ -28,8 +28,10 @@ describe('Employee Lists', () => {
     });
   });
   test('Should display loading icon', async () => {
-    const loadingText = screen.getByRole('loading');
-    expect(loadingText).toBeInTheDocument();
+    await waitFor(() => {
+      const loadingText = screen.getByRole('loading');
+      expect(loadingText).toBeInTheDocument();
+    });
   });
   test('Should disappear loading icon when successfully loaded', async () => {
     await waitFor(() => {

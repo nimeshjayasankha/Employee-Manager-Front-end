@@ -42,6 +42,7 @@ const Search = ({
           fullWidth
           value={search}
           onChange={(event) => setSearch(event.target.value)}
+          autoFocus={Boolean(search)}
         />
       </Grid>
 
