@@ -46,6 +46,7 @@ const EmployeeAddEdit = () => {
       gender: '',
     },
   });
+
   /**
    * get single employee details for given id and it set to the form
    */
@@ -82,7 +83,7 @@ const EmployeeAddEdit = () => {
    * if employee data successfully saved or update this success function triggered
    */
   const successfullySaved = () => {
-    successAlert(`Employee Successfully ${id ? 'updated' : 'saved'}`);
+    successAlert(`Employee successfully ${id ? 'updated' : 'saved'}`);
     reset();
     navigate('/employee/list');
   };

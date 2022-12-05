@@ -15,6 +15,7 @@ type EmployeeParams = {
   searchBy?: string;
 };
 
+//api call for get employee lists
 export const employeeLists = createAsyncThunk(
   'employee/lists',
   async (searchParams: EmployeeParams, thunkApi) => {
@@ -31,6 +32,7 @@ export const employeeLists = createAsyncThunk(
   }
 );
 
+//api call for delete employee
 export const deleteEmployee = createAsyncThunk(
   'employee/delete',
   async (id: string, thunkAPI) => {
@@ -45,6 +47,7 @@ export const deleteEmployee = createAsyncThunk(
   }
 );
 
+//api call for get single employee
 export const singleEmployee = createAsyncThunk(
   'employee/single',
   async (id: string, thunkApi) => {
@@ -81,7 +84,7 @@ const EmployeeListsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(employeeLists.pending, (state, action) => {
+      .addCase(employeeLists.pending, (state, action) => { 
         state.isLoading = true;
       })
       .addCase(employeeLists.fulfilled, (state, action: PayloadAction<any>) => {

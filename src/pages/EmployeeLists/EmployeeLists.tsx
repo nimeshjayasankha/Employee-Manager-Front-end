@@ -70,7 +70,6 @@ const EmployeeLists: React.FC = () => {
    * @param {number} id employee id
    */
   const deleteSingleEmployee = (id: string) => {
-    console.info('called delete employee backend endpoint');
     dispatch(deleteEmployee(id))
       .then(unwrapResult)
       .then((data) => {
